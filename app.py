@@ -48,6 +48,126 @@ st.markdown(f"""
     html, body, div, [class*="stApp"], input, textarea, select, button, label, p, h1, h2, h3, span, .floating-chat-ball, .chat-window {{
         cursor: {current_cursor} !important;
     }}
+    current_cursor = cursor_map[st.session_state.active_cursor]
+
+# --- PASTE THE CSS BLOCK HERE ---
+st.markdown(f"""
+    <style>
+    /* Global Direct Cursors enforcing state during typing, clicking, and loading */
+    html, body, div, [class*="stApp"], input, textarea, select, button, label, p, h1, h2, h3, span, .floating-chat-ball, .chat-window {{
+        cursor: {current_cursor} !important;
+    }}
+
+    .stApp {{
+        background-color: #05050c !important;
+        background-image: linear-gradient(rgba(5, 5, 12, 0.75), rgba(5, 5, 12, 0.9)), 
+                          url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        color: #eaeaea;
+        font-family: 'Inter', sans-serif;
+    }}
+    
+    /* High-End Cyber-Neon Sidebar Overhaul */
+    [data-testid="stSidebar"] {{
+        background: linear-gradient(180deg, #101018 0%, #1a1a2e 100%);
+        border-right: 2px solid #8a2be2;
+        box-shadow: 5px 0 25px rgba(138,43,226,0.3);
+        padding-top: 20px;
+    }}
+    
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] div {{
+        color: #00ffcc !important;
+    }}
+    
+    /* Gamified Store Grid with fixed edges and tightened spacing */
+    .store-grid-container {{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        margin-top: 15px;
+    }}
+    
+    .store-item-card {{
+        background: linear-gradient(135deg, #161622, #1f1f38);
+        border: 2px solid #3f3f6c;
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+        transition: all 0.4s ease;
+        width: 320px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }}
+    
+    .store-item-card:hover {{
+        border-color: #00ffcc;
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 15px 45px rgba(0,255,204,0.15);
+    }}
+    
+    /* Wallpaper Stickers Layer */
+    .sticker-wallpaper-layer {{
+        position: fixed;
+        top: 0; left: 0; width: 100vw; height: 100vh;
+        z-index: -1;
+        pointer-events: none;
+        opacity: 0.15;
+    }}
+    
+    /* Floating Action AI Chat Ball UI */
+    .floating-chat-ball {{
+        position: fixed;
+        bottom: 35px;
+        right: 35px;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #8a2be2, #00ffcc);
+        box-shadow: 0 8px 25px rgba(0,255,204,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        color: #000;
+        z-index: 9998;
+        border: none;
+        transition: all 0.3s ease;
+    }}
+    .floating-chat-ball:hover {{
+        transform: scale(1.1) rotate(10deg);
+        box-shadow: 0 12px 35px rgba(255,0,127,0.6);
+        background: linear-gradient(135deg, #ff007f, #ffbf69) !important;
+    }}
+    
+    /* The Chat Window */
+    .chat-window {{
+        position: fixed;
+        bottom: 120px;
+        right: 35px;
+        width: 420px;
+        height: 500px;
+        background: #161622;
+        border: 2px solid #33334d;
+        border-radius: 20px;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+        z-index: 9997;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        animation: scaleIn 0.3s ease-in-out;
+    }}
+    @keyframes scaleIn {{
+        from {{ transform: scale(0); opacity: 0; }}
+        to {{ transform: scale(1); opacity: 1; }}
+    }}
+    </style>
+""", unsafe_allow_html=True)
+# --- END OF CSS BLOCK ---
 
     .stApp {{
         background-color: {st.session_state.active_bg} !important;
