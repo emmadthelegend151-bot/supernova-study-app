@@ -71,7 +71,7 @@ st.markdown(f"""
     
     /* High-End Cyber-Neon Sidebar Overhaul */
     [data-testid="stSidebar"] {{
-        background: linear-gradient(180deg, #101018 0%, #1a1a2e 100%);
+        background: linear-gradient(180 deg, #101018 0%, #1a1a2e 100%);
         border-right: 2px solid #8a2be2;
         box-shadow: 5px 0 25px rgba(138,43,226,0.3);
         padding-top: 20px;
