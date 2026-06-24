@@ -5,7 +5,7 @@ st.set_page_config(page_title="Supernova Study Portal", page_icon="🌠", layout
 
 # --- INITIALIZE SESSION STATE WITH PRE-FILLED DETAILS ---
 if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False  # Set to False briefly so intro runs
+    st.session_state.logged_in = False  
 if "intro_played" not in st.session_state:
     st.session_state.intro_played = False
 if "username" not in st.session_state:
@@ -26,37 +26,47 @@ if "active_cursor" not in st.session_state:
     st.session_state.active_cursor = "default"
 if "active_bg" not in st.session_state:
     st.session_state.active_bg = "#0d0e12"
+if "chat_open" not in st.session_state:
+    st.session_state.chat_open = False
+if "chat_history" not in st.session_state:
+    st.session_state.chat_history = []
 
-# Cursor CSS mapping
+# Universal cross-browser cursor mappings 
 cursor_map = {
-    "rocket": "url('https://img.icons8.com/emoji/48/rocket-emoji.png'), auto",
-    "star": "url('https://img.icons8.com/fluent/48/000000/star.png'), auto",
-    "laser": "url('https://img.icons8.com/ios-filled/50/00ffcc/lightning-bolt.png'), auto",
+    "rocket": "url('https://img.icons8.com/emoji/48/rocket-emoji.png') 16 16, auto",
+    "star": "url('https://img.icons8.com/fluent/48/000000/star.png') 16 16, auto",
+    "laser": "url('https://img.icons8.com/ios-filled/50/00ffcc/lightning-bolt.png') 16 16, auto",
     "default": "default"
 }
 
-# Sticker wallpaper pattern generator
-def get_sticker_wallpaper(stickers):
-    if not stickers:
-        return "none"
-    # Create a repeating background pattern using the unlocked stickers
-    sticker_svgs = "".join([f"<text y=\\'50%\\'> {s} </text>" for s in stickers])
-    return f"radial-gradient(circle, rgba(138,43,226,0.1) 10%, transparent 10%), linear-gradient(45deg, #0d0e12 25%, transparent 25%)"
+current_cursor = cursor_map[st.session_state.active_cursor]
 
-# Dynamic Wallpaper & Cursor injection
+# Immersive Cyberpunk / Neon Dynamic Stylesheet
 st.markdown(f"""
     <style>
+    /* Global Direct Cursors enforcing state during typing, clicking, and loading */
+    html, body, div, [class*="stApp"], input, textarea, select, button, label, p, h1, h2, h3, span, .floating-chat-ball, .chat-window {{
+        cursor: {current_cursor} !important;
+    }}
+
     .stApp {{
-        cursor: {cursor_map[st.session_state.active_cursor]};
         background-color: {st.session_state.active_bg} !important;
         background-image: url('https://www.transparenttextures.com/patterns/cubes.png');
         background-blend-mode: overlay;
-    }}
-    
-    /* Global Dark Mode & Typography */
-    .stApp {{
         color: #eaeaea;
         font-family: 'Inter', sans-serif;
+    }}
+    
+    /* High-End Cyber-Neon Sidebar Overhaul */
+    [data-testid="stSidebar"] {{
+        background: linear-gradient(180deg, #101018 0%, #1a1a2e 100%);
+        border-right: 2px solid #8a2be2;
+        box-shadow: 5px 0 25px rgba(138,43,226,0.3);
+        padding-top: 20px;
+    }}
+    
+    [data-testid="stSidebar"] h1, [data-testid="stSidebar"] h3, [data-testid="stSidebar"] div {{
+        color: #00ffcc !important;
     }}
     
     /* Main Headings */
@@ -82,7 +92,7 @@ st.markdown(f"""
         margin-bottom: 2em;
     }}
 
-    /* Custom Cards (3D-like hover effects) */
+    /* Custom Cards */
     .custom-card {{
         background: linear-gradient(145deg, #181824, #101018);
         border: 1px solid #33334d;
@@ -99,7 +109,7 @@ st.markdown(f"""
         box-shadow: 0 15px 40px rgba(0,255,204,0.2);
     }}
 
-    /* Custom Buttons with Color-Changing Hover Effect */
+    /* Custom Buttons */
     .stButton>button {{
         background: linear-gradient(90deg, #8a2be2, #00ffcc);
         color: #000000;
@@ -109,7 +119,6 @@ st.markdown(f"""
         padding: 12px 28px;
         box-shadow: 0 4px 15px rgba(138,43,226,0.3);
         transition: all 0.3s ease;
-        cursor: pointer !important;
     }}
     .stButton>button:hover {{
         transform: translateY(-3px) scale(1.05);
@@ -118,7 +127,7 @@ st.markdown(f"""
         color: #fff !important;
     }}
     
-    /* Text Inputs / Selectboxes Styling */
+    /* Text Inputs / Selectboxes */
     .stTextInput>div>div>input, .stSelectbox>div>div>div {{
         background-color: #1e1e2a !important;
         color: #00ffcc !important;
@@ -151,7 +160,7 @@ st.markdown(f"""
         margin-bottom: 15px;
     }}
     
-    /* Sleek Gamified Store Grid */
+    /* Gamified Store Grid */
     .store-grid-container {{
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -167,6 +176,10 @@ st.markdown(f"""
         text-align: center;
         box-shadow: 0 10px 35px rgba(0,0,0,0.5);
         transition: all 0.4s ease;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        min-height: 220px;
     }}
     
     .store-item-card:hover {{
@@ -176,27 +189,73 @@ st.markdown(f"""
     }}
     
     /* Wallpaper Stickers Layer */
-    .sticker- wallpaper-layer {{
+    .sticker-wallpaper-layer {{
         position: fixed;
         top: 0; left: 0; width: 100vw; height: 100vh;
         z-index: -1;
         pointer-events: none;
         opacity: 0.15;
     }}
+    
+    /* Floating Action AI Chat Ball UI */
+    .floating-chat-ball {{
+        position: fixed;
+        bottom: 35px;
+        right: 35px;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #8a2be2, #00ffcc);
+        box-shadow: 0 8px 25px rgba(0,255,204,0.4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+        color: #000;
+        z-index: 9998;
+        border: none;
+        transition: all 0.3s ease;
+    }}
+    .floating-chat-ball:hover {{
+        transform: scale(1.1) rotate(10deg);
+        box-shadow: 0 12px 35px rgba(255,0,127,0.6);
+        background: linear-gradient(135deg, #ff007f, #ffbf69) !important;
+    }}
+    
+    /* The Chat Window */
+    .chat-window {{
+        position: fixed;
+        bottom: 120px;
+        right: 35px;
+        width: 420px;
+        height: 500px;
+        background: #161622;
+        border: 2px solid #33334d;
+        border-radius: 20px;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.7);
+        z-index: 9997;
+        display: flex;
+        flex-direction: column;
+        padding: 20px;
+        animation: scaleIn 0.3s ease-in-out;
+    }}
+    @keyframes scaleIn {{
+        from {{ transform: scale(0); opacity: 0; }}
+        to {{ transform: scale(1); opacity: 1; }}
+    }}
     </style>
 """, unsafe_allow_html=True)
 
-# Wallpaper sticker container
+# Wallpaper sticker container - Random/Wallpaper-style pattern placement
 if st.session_state.stickers:
     st.markdown(f"""
-    <div class="sticker-wallpaper-layer" style="font-size: 50px;">
-        {''.join([f'<span style="position:absolute; top:{i*25}%; left:{j*20}%;">{s}</span>' for i, s in enumerate(st.session_state.stickers) for j in range(5)])}
+    <div class="sticker-wallpaper-layer" style="font-size: 60px;">
+        {''.join([f'<span style="position:absolute; top:{i*33}%; left:{j*25}%; transform: rotate({i*15}deg);">{s}</span>' for i, s in enumerate(st.session_state.stickers) for j in range(4)])}
     </div>
     """, unsafe_allow_html=True)
 
-# --- CINEMATIC INTRO ROCKET / PLANET EXPLOSION ANIMATION ---
+# --- CINEMATIC WELCOME ROCKET / PLANET EXPLOSION INTRO ---
 if not st.session_state.intro_played:
-    # Canvas animation via HTML/JS injection for 2-minute pitch impact
     st.markdown("""
         <div id="intro-container" style="position:fixed; top:0; left:0; width:100vw; height:100vh; background:#0d0e12; z-index:9999; display:flex; align-items:center; justify-content:center; flex-direction:column; animation: fadeOut 0.5s ease-in-out 3.5s forwards;">
             <div style="position:relative; width:300px; height:300px;">
@@ -234,18 +293,17 @@ if not st.session_state.intro_played:
     """, unsafe_allow_html=True)
     st.session_state.intro_played = True
 
-# --- FLOW: MAIN DASHBOARD ---
 st.session_state.logged_in = True  
 
+# --- SIDEBAR ---
 st.sidebar.title("✨ Welcome back,")
 st.sidebar.subheader(f"👤 {st.session_state.username}")
-st.sidebar.markdown(f"**Program:** {st.session_state.program} &nbsp;|&nbsp; **School:** {st.session_state.school}")
+st.sidebar.markdown(f"**Program:** {st.session_state.program} &nbsp;|&nbsp; **School:** {st.sidebar.markdown(st.session_state.school) if False else st.session_state.school}")
 
-# Interactivity routing: sidebar handles the current screen explicitly
 app_mode = st.sidebar.selectbox("Navigate", ["Dashboard", "Past Papers & AI Hub", "Reward Store"], index=["Dashboard", "Past Papers & AI Hub", "Reward Store"].index(st.session_state.app_mode))
 st.session_state.app_mode = app_mode
 
-# Sidebar persistent credit display
+# Sidebar credit status
 st.sidebar.markdown("---")
 st.sidebar.markdown(f'<p class="credit-box">💰 Credits: {st.session_state.credits} XP</p>', unsafe_allow_html=True)
 
@@ -254,7 +312,6 @@ if st.session_state.app_mode == "Dashboard":
     st.markdown("<h1 class='main-title'>⚡ SUPERNOVA INTERACTIVE PORTAL</h1>", unsafe_allow_html=True)
     st.markdown("<p class='main-subtitle'>Accelerate your grades with 3D-simulated AI insights & past papers</p>", unsafe_allow_html=True)
     
-    # Animated floating dashboard cards
     col1, col2, col3 = st.columns(3)
     with col1:
         st.markdown("""<div class="custom-card"><h3>📚 Subjects</h3><p>Physics, Computer, Chemistry, Bio, Maths, Add-Math</p></div>""", unsafe_allow_html=True)
@@ -265,7 +322,6 @@ if st.session_state.app_mode == "Dashboard":
 
     st.markdown("<br><br>", unsafe_allow_html=True)
     
-    # Smooth routing button
     if st.button("🚀 Enter Past Papers & AI Hub"):
         st.session_state.app_mode = "Past Papers & AI Hub"
         st.rerun()
@@ -282,8 +338,6 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
     
     if search_query:
         st.success(f"Papers located matching '{search_query}' for {selected_subject}:")
-        
-        # Options for all major Cambridge exam sessions
         session = st.selectbox("Select Exam Series/Variant:", ["Feb/March", "May/June", "October/November"])
         
         st.markdown("**Click any actual Cambridge link below to download your paper:**")
@@ -294,7 +348,7 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
         st.markdown("<br>", unsafe_allow_html=True)
         st.markdown("### 📌 Step 2: Select a Topic for In-depth AI Analysis")
         topics = {
-            "Physics": ["Kinematics", "Dynamics", "Electricity & Circuits", "Waves & Optics", "Nuclear Physics"],
+            "Physics": ["Kinematics", "Dynamics", "Moments", "Electricity & Circuits", "Waves & Optics", "Nuclear Physics"],
             "Computer": ["Algorithms & Problem Solving", "Data Representation", "Hardware & Logic Gates", "Communication & Networks", "System Software"],
             "Chemistry": ["Stoichiometry", "Atomic Structure", "Organic Chemistry", "Electrochemistry", "Chemical Kinetics"],
             "Biology": ["Cell Biology", "Biological Molecules", "Enzymes & Metabolism", "Genetics", "Ecology"],
@@ -309,7 +363,7 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
             st.session_state.credits += 10 
             
             if selected_topic == "Kinematics":
-                # Detailed Kinematics breakdown explicitly requested
+                # In-depth Physics Kinematics Masterclass with formulas and graphs
                 st.markdown(f"## 📖 AI Kinematics Masterclass (Physics)")
                 st.markdown("""
                 <div class="paragraph-text">
@@ -318,10 +372,49 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
                 <div class="paragraph-text">
                 To systematically bypass these common pitfalls, you must train yourself to dissect problems methodically: first, explicitly state the known parameters, second, identify the governing physical law, and third, substitute values with strict adherence to S.I. units. Furthermore, dynamics builds directly onto these concepts by analyzing the direct causes of motion—namely forces and Newton's Laws. Particular focus must be given to resolving forces into perpendicular components and fully grasping resistive forces such as air resistance or terminal velocity. Consistent, deliberate practice using papers from the last five years will expose you to the recurring structural patterns and application-style questions designed by examiners to test true conceptual depth rather than simple recall.
                 </div>
-                """, unsafe_allow_html=True)
-                # Strategic Diagram for Learners
-                st.markdown("Visualizing displacement and velocity graphs helps simplify calculations:")
+                
+                ### 📐 Fundamental Kinematics Equations of Motion (SUVAT)
+                The standard kinematic formulas for uniform acceleration along a straight line apply directly to physical bodies in dynamic frameworks:
+                * **v = u + at** (Final velocity equals initial velocity plus acceleration times time)
+                * **s = ((u + v) / 2) * t** (Displacement equals average velocity times time)
+                * **s = ut + 0.5at²** (Displacement calculation under uniform acceleration)
+                * **v² = u² + 2as** (Velocity squared equals initial velocity squared plus twice acceleration times displacement)
+                """)
+                
+                # Visual diagram tags for learner guidance
+                st.markdown("Visualizing displacement and velocity vector profiles makes computations intuitive:")
                 st.image("https://upload.wikimedia.org/wikipedia/commons/e/ea/Displacement-time.png", caption="Displacement-Time Graph Vector Breakdown")
+                
+
+[Image of displacement time graph]
+
+                st.image("https://upload.wikimedia.org/wikipedia/commons/2/26/Velocity-time.png", caption="Velocity-Time Graph Acceleration & Area Under Curve")
+                
+
+[Image of velocity time graph]
+
+                
+            elif selected_topic == "Moments":
+                # In-depth Physics Moments Masterclass with formulas and principles
+                st.markdown(f"## 📖 AI Moments Masterclass (Physics)")
+                st.markdown("""
+                <div class="paragraph-text">
+                The topic of <strong>Moments</strong> studies the turning effect of forces. A moment is defined mathematically as the product of the force and the perpendicular distance from the pivot to the line of action of the force. When dealing with rigid bodies, understanding the principle of moments is critical for achieving top grades. This principle states that for a system to be in rotational equilibrium, the sum of clockwise moments about any pivot must equal the sum of anticlockwise moments about that same pivot.
+                </div>
+                <div class="paragraph-text">
+                Common examination pitfalls include failing to measure the distance perpendicularly to the force vector or missing forces acting on the system altogether (such as the reaction force at a pivot). To achieve academic precision, you must draw a complete free-body force diagram and establish a clear sign convention before forming your algebraic equilibrium equations.
+                </div>
+                
+                ### 🧮 Important Moments Formulas & Conditions
+                * **Moment of a Force (M)**: $M = F \times d$ (where **F** is force in Newtons and **d** is the perpendicular distance in meters).
+                * **S.I. Unit for Moment**: Newton-meter ($N\,m$).
+                * **First Condition for Equilibrium**: $\sum F = 0$ (Resultant force in any direction is zero).
+                * **Second Condition for Equilibrium (Principle of Moments)**: $\sum \text{Clockwise Moments} = \sum \text{Anticlockwise Moments}$.
+                """)
+                
+                st.image("https://upload.wikimedia.org/wikipedia/commons/b/b0/Moment_arm.svg", caption="Visualizing Lever Arms and Pivot Points for Torque/Moments")
+                
+                
             else:
                 st.markdown(f"## 📖 AI Comprehensive Masterclass: {selected_topic} ({selected_subject})")
                 st.markdown(f"""
@@ -342,49 +435,23 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
             st.write("Cross-reference your answers with official standards to see where marks are awarded or lost:")
             st.download_button("Download Marking Scheme (PDF)", data="Sample PDF Content", file_name="marking_scheme.pdf")
 
-    # Conversational AI Past Paper Assistant (Universal Chat Module)
-    st.markdown("---")
-    st.markdown("<h2 style='color:#00ffcc'>💬 Universal Chat & AI Assistant</h2>", unsafe_allow_html=True)
-    st.markdown("<p style='color:#a8b2c1'>Ask the AI anything—whether it's finding an obscure paper variant, getting unstuck on a homework problem, or requesting advice on how to write structured answers!</p>", unsafe_allow_html=True)
-    
-    user_prompt = st.text_input(f"Pose any query related to {selected_subject}:")
-    if st.button("Submit to AI Assistant"):
-        if user_prompt:
-            st.session_state.credits += 15
-            st.markdown(f"""
-            **AI Assistant Response:**
-            Got it! Let's address your detailed query regarding **{user_prompt}**.
-            """)
-            # Multi-paragraph rich explanation as requested by student
-            st.markdown(f"""
-            <div class="paragraph-text">
-            When approaching complex analytical questions in <strong>{selected_subject}</strong>, the most critical step is to methodically break down the prompt before attempting any direct computations or theoretical assertions. Many high-achieving candidates lose significant credit simply by failing to identify the core syllabus keywords embedded within the question stem. You must first extract all given numerical values and explicitly state the theoretical principles or fundamental laws that govern the scenario. This preliminary structuring guarantees that your subsequent lines of reasoning remain completely rigorous and academically sound.
-            </div>
-            <div class="paragraph-text">
-            Furthermore, executing calculations requires strict adherence to standard formatting to secure maximum examiner grace. Always state the baseline formula in its raw, algebraic form, substitute your variables with S.I. units attached, and proudly display your final computed values to an appropriate number of significant figures. For long-form theoretical paragraphs, avoid conversational phrasing or casual abbreviations at all costs; instead, lean heavily on the precise technical vocabulary outlined in your Cambridge syllabus. By systematically combining exact definitions with clear mathematical steps, your answers will consistently hit the strict assessment criteria.
-            </div>
-            """, unsafe_allow_html=True)
-            
-            st.info("*Would you like me to generate a tailored study timetable to get you fully prepared?*")
-        else:
-            st.warning("Please enter a question or request first.")
-
-# --- REWARD STORE SCREEN (HIGH-END NEON / SHAPED GRID) ---
+# --- REWARD STORE SCREEN ---
 elif st.session_state.app_mode == "Reward Store":
     st.markdown("<h1 class='main-title'>🎁 Supernova Reward Store</h1>", unsafe_allow_html=True)
     st.markdown("<p class='main-subtitle'>Redeem your hard-earned study XP credits to customize your interface, cursors, and app wallpaper</p>", unsafe_allow_html=True)
     
     st.markdown(f'<p class="credit-box" style="text-align:center; margin-bottom:20px;">💰 Current Credit Balance: {st.session_state.credits} XP</p>', unsafe_allow_html=True)
     
-    # Beautiful responsive gamification store cards
+    # Beautiful responsive gamification store cards with cleared empty lines
     st.markdown("<div class='store-grid-container'>", unsafe_allow_html=True)
     
     # Store item 1: Custom Cursors
     st.markdown("""<div class="store-item-card">""", unsafe_allow_html=True)
     st.markdown("<h2>🚀 Custom Cursors</h2>", unsafe_allow_html=True)
     st.markdown("<p>Change your UI pointer shape (Cost: 50 XP)</p>", unsafe_allow_html=True)
-    cursor_choice = st.selectbox("Select pointer style:", ["rocket", "star", "laser", "default"])
-    if st.button("Apply Cursor"):
+    
+    cursor_choice = st.selectbox("Select pointer style:", ["rocket", "star", "laser", "default"], key="cursor_dd")
+    if st.button("Apply Cursor", key="apply_cursor_btn"):
         if st.session_state.credits >= 50:
             st.session_state.credits -= 50
             st.session_state.active_cursor = cursor_choice
@@ -398,8 +465,9 @@ elif st.session_state.app_mode == "Reward Store":
     st.markdown("""<div class="store-item-card">""", unsafe_allow_html=True)
     st.markdown("<h2>🎨 UI Backgrounds</h2>", unsafe_allow_html=True)
     st.markdown("<p>Customize your dark mode portal base (Cost: 100 XP)</p>", unsafe_allow_html=True)
-    bg_choice = st.selectbox("Select Theme Base:", ["Deep Black (#0d0e12)", "Cyberpunk Blue (#0b132b)", "Neon Violet (#181124)"])
-    if st.button("Apply Background"):
+    
+    bg_choice = st.selectbox("Select Theme Base:", ["Deep Black (#0d0e12)", "Cyberpunk Blue (#0b132b)", "Neon Violet (#181124)"], key="theme_dd")
+    if st.button("Apply Background", key="apply_bg_btn"):
         if st.session_state.credits >= 100:
             st.session_state.credits -= 100
             mapped_color = "#0d0e12" if "Black" in bg_choice else "#0b132b" if "Blue" in bg_choice else "#181124"
@@ -410,12 +478,12 @@ elif st.session_state.app_mode == "Reward Store":
             st.error("Not enough credits.")
     st.markdown("</div>", unsafe_allow_html=True)
     
-    # Store item 3: Digital Stickers (Spawned to wallpaper)
+    # Store item 3: Digital Stickers
     st.markdown("""<div class="store-item-card">""", unsafe_allow_html=True)
     st.markdown("<h2>🌟 Digital UI Wallpaper Stickers</h2>", unsafe_allow_html=True)
     st.markdown("<p>Slap stickers randomly across your wallpaper (Cost: 50 XP)</p>", unsafe_allow_html=True)
     
-    if st.button("Buy ⭐ for 50 XP"):
+    if st.button("Buy ⭐ for 50 XP", key="sticker_star"):
         if st.session_state.credits >= 50:
             st.session_state.credits -= 50
             st.session_state.stickers.append("⭐")
@@ -424,7 +492,7 @@ elif st.session_state.app_mode == "Reward Store":
         else:
             st.error("Not enough credits.")
     
-    if st.button("Buy 🚀 for 50 XP"):
+    if st.button("Buy 🚀 for 50 XP", key="sticker_rocket"):
         if st.session_state.credits >= 50:
             st.session_state.credits -= 50
             st.session_state.stickers.append("🚀")
@@ -433,7 +501,7 @@ elif st.session_state.app_mode == "Reward Store":
         else:
             st.error("Not enough credits.")
             
-    if st.button("Buy 🎓 for 50 XP"):
+    if st.button("Buy 🎓 for 50 XP", key="sticker_cap"):
         if st.session_state.credits >= 50:
             st.session_state.credits -= 50
             st.session_state.stickers.append("🎓")
@@ -448,3 +516,62 @@ elif st.session_state.app_mode == "Reward Store":
     if st.session_state.stickers:
         st.markdown("<br><h3>🎒 Your Active Wallpaper Stickers:</h3>", unsafe_allow_html=True)
         st.markdown(f"<div style='font-size:2.5em; background:#1e1e2a; padding:20px; border-radius:18px; border:1px solid #33334d; text-align:center;'>{' '.join(st.session_state.stickers)}</div>", unsafe_allow_html=True)
+
+# --- FLOATING CHATBOT ENGINE (STICKING BALL UI ON THE RIGHT) ---
+if st.session_state.chat_open:
+    st.markdown("""
+    <div class="chat-window">
+        <h3 style="color:#00ffcc; margin-top:0; border-bottom:1px solid #33334d; padding-bottom:10px;">🤖 Supernova AI Chat</h3>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    # Chat window contents
+    st.write("Ask the AI anything—formulas, definitions, or past paper assistance!")
+    chat_prompt = st.text_input("Type your question here:", key="chat_input_txt")
+    
+    if st.button("Send", key="send_chat_btn"):
+        if chat_prompt:
+            st.session_state.credits += 15
+            st.session_state.chat_history.append(("user", chat_prompt))
+            
+            # Universal Chat Detailed Paragraph Response Engine
+            ai_response = f"""
+            Let's methodically break down your query regarding **{chat_prompt}**.
+            
+            When approaching analytical questions, the most critical step is to analyze the syllabus keywords before attempting any direct computations. Many candidates lose credit simply by failing to identify core principles embedded within the prompt. You must first extract all given parameters and state the fundamental laws or formulas that govern the scenario.
+            
+            Executing computations requires strict adherence to standard formatting. Always state the baseline formula in its algebraic form, substitute variables with S.I. units, and proudly display final values to appropriate significant figures. For theoretical explanations, avoid conversational phrasing or casual abbreviations; lean heavily on precise technical vocabulary.
+            """
+            
+            # Additional instant physics clarification if user prompts moments or forces
+            if "moment" in chat_prompt.lower() or "torque" in chat_prompt.lower():
+                ai_response += """
+                ### 🧮 Moments Quick-Reference
+                A moment is the turning effect of a force. 
+                **Moment = Force × Perpendicular distance from pivot** (M = F × d). 
+                For equilibrium, the **Principle of Moments** dictates that the total clockwise moment equals the total anticlockwise moment about the same pivot.
+                """
+                
+            st.session_state.chat_history.append(("ai", ai_response))
+            st.rerun()
+        else:
+            st.warning("Please enter a query.")
+            
+    # Display message history inside the chat UI container
+    for sender, text in st.session_state.chat_history:
+        if sender == "user":
+            st.markdown(f"**You:** {text}")
+        else:
+            st.markdown(f"**AI:** {text}")
+            
+    if st.button("❌ Close Chat", key="close_chat_btn"):
+        st.session_state.chat_open = False
+        st.rerun()
+else:
+    # Floating Ball launcher UI sticking out on the bottom right of the screen
+    if st.markdown("""
+        <button class="floating-chat-ball" onclick="this.click()">💬</button>
+    """, unsafe_allow_html=True):
+        if st.button("🤖", key="launch_ball_btn", help="Open Universal AI Chat Assistant"):
+            st.session_state.chat_open = True
+            st.rerun()
