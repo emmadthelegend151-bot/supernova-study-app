@@ -50,7 +50,7 @@ st.markdown(f"""
     }}
     current_cursor = cursor_map[st.session_state.active_cursor]
 
-# --- PASTE THE CSS BLOCK HERE ---
+
 st.markdown(f"""
     <style>
     /* Global Direct Cursors enforcing state during typing, clicking, and loading */
