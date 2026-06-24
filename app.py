@@ -385,7 +385,7 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
                 st.markdown("Here is a helpful diagram for understanding displacement over time:")
                 
 
-[Image of displacement-time graph]
+
 
                 st.image("https://upload.wikimedia.org/wikipedia/commons/e/ea/Displacement-time.png", caption="Displacement-Time Graph Vector Breakdown")
                 st.image("https://upload.wikimedia.org/wikipedia/commons/2/26/Velocity-time.png", caption="Velocity-Time Graph Acceleration & Area Under Curve")
