@@ -44,7 +44,7 @@ st.markdown("""
         margin-bottom: 15px;
     }
 
-    /* Custom Buttons (Neon Purple/Cyan) */
+    /* Custom Buttons (Neon Purple/Cyan) with Color-Changing Cursor Effect */
     .stButton>button {
         background: linear-gradient(90deg, #8a2be2, #00ffcc);
         color: #000000;
@@ -54,11 +54,13 @@ st.markdown("""
         padding: 10px 24px;
         box-shadow: 0 4px 15px rgba(138,43,226,0.3);
         transition: all 0.3s ease;
+        cursor: alias !important;
     }
     .stButton>button:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0,255,204,0.5);
-        color: #000;
+        background: linear-gradient(90deg, #ff007f, #ffbf69) !important;
+        box-shadow: 0 6px 20px rgba(255,0,127,0.5);
+        color: #fff !important;
     }
     
     /* Text Inputs / Selectboxes Styling */
@@ -85,45 +87,43 @@ st.markdown("""
         line-height: 1.8; 
         color: #d1d5db;
     }
+    
+    /* Store Section Decor */
+    .store-container {
+        background: linear-gradient(135deg, #1e1e2a, #2a2a36);
+        border: 2px dashed #8a2be2;
+        padding: 30px;
+        border-radius: 16px;
+        text-align: center;
+        box-shadow: 0 10px 30px rgba(138,43,226,0.2);
+    }
     </style>
 """, unsafe_allow_html=True)
 
-# --- INITIALIZE SESSION STATE ---
+# --- INITIALIZE SESSION STATE WITH PRE-FILLED DETAILS ---
 if "logged_in" not in st.session_state:
-    st.session_state.logged_in = False
+    st.session_state.logged_in = True  # Set directly to True as requested
+if "username" not in st.session_state:
+    st.session_state.username = "Himachali"
+if "email" not in st.session_state:
+    st.session_state.email = "Ahmed@gmail.com"
+if "program" not in st.session_state:
+    st.session_state.program = "A Levels"
+if "school" not in st.session_state:
+    st.session_state.school = "Supernova"
 if "credits" not in st.session_state:
     st.session_state.credits = 700  # Starts with 700 credits
 if "stickers" not in st.session_state:
     st.session_state.stickers = []
+if "app_mode" not in st.session_state:
+    st.session_state.app_mode = "Dashboard"
 
-# --- FLOW 1: ONBOARDING (SIGN-UP) ---
-if not st.session_state.logged_in:
-    st.markdown("<h1 class='main-title'>🌠 SUPERNOVA</h1>", unsafe_allow_html=True)
-    st.markdown("<p class='main-subtitle'>The Ultimate O/A-Level Accelerator</p>", unsafe_allow_html=True)
-    
-    # Wrap form in a clean styled sub-block
-    with st.form("signup_form"):
-        st.subheader("🚀 Join the Network")
-        full_name = st.text_input("Full Name")
-        email = st.text_input("Email Address")
-        level = st.selectbox("Select your program", ["Select your level", "O Levels", "A Levels"])
-        school = st.text_input("School Name", value="Supernova")
-        
-        submit_btn = st.form_submit_button("Enter Portal")
-        
-        if submit_btn:
-            if full_name and email and level != "Select your level":
-                st.session_state.logged_in = True
-                st.session_state.username = full_name
-                st.rerun()
-            else:
-                st.error("Please fill in all details to proceed.")
-
-# --- FLOW 2: MAIN DASHBOARD ---
-else:
+# --- FLOW: MAIN DASHBOARD ---
+if st.session_state.logged_in:
     st.sidebar.title(f"✨ Welcome back,")
     st.sidebar.subheader(f"👤 {st.session_state.username}")
-    st.sidebar.markdown(f"**Level:** O/A Levels &nbsp;|&nbsp; **School:** Supernova")
+    st.sidebar.markdown(f"**Program:** {st.session_state.program} &nbsp;|&nbsp; **School:** {st.session_state.school}")
+    
     app_mode = st.sidebar.selectbox("Navigate", ["Dashboard", "Past Papers & AI Hub", "Reward Store"])
     
     # Sidebar persistent credit display
@@ -153,8 +153,8 @@ else:
         st.markdown("<h1 class='main-title'>🔍 Past Papers & AI Masterclass</h1>", unsafe_allow_html=True)
         
         # 1. Past Papers Dynamic Search Engine
-        st.markdown("### 📄 Step 1: Search Past Paper Year")
-        search_query = st.text_input("Enter target year (e.g., 2025 or June 2022):")
+        st.markdown("### 📄 Step 1: Search Past Paper Year / Query")
+        search_query = st.text_input("Enter target year (e.g., 2025 or June 2022):", value="2025")
         
         subjects = ["Physics", "Computer", "Chemistry", "Biology", "Maths", "Add-Maths"]
         selected_subject = st.selectbox("Select Subject:", subjects)
@@ -162,8 +162,8 @@ else:
         if search_query:
             st.success(f"Papers located matching '{search_query}' for {selected_subject}:")
             
-            # Sub-options for exam sessions
-            session = st.radio("Select Exam Series:", ["May/June", "October/November"])
+            # Options for all major Cambridge exam sessions as requested
+            session = st.selectbox("Select Exam Series/Variant:", ["Feb/March", "May/June", "October/November"])
             
             st.markdown(f"**Click any actual Cambridge link below to download your paper:**")
             st.markdown(f"🔗 [Variant 11 - {session} {search_query} Past Paper Direct Link](https://www.cambridgeinternational.org)")
@@ -190,12 +190,12 @@ else:
                 st.markdown(f"## 📖 AI Comprehensive Masterclass: {selected_topic} ({selected_subject})")
                 
                 # Highly descriptive multi-paragraph explanations as requested
-                st.markdown("""
+                st.markdown(f"""
                 <p class="paragraph-text">
-                Mastering <strong>Kinematics and Dynamics</strong> forms the indisputable bedrock of achieving a stellar A* in your Cambridge examinations. At its core, this foundational domain forces you to shift from merely memorizing formulas to genuinely conceptualizing the underlying mechanical interactions of physical bodies in motion. Examiners frequently design multi-tier data response questions that require you to seamlessly integrate displacement-time and velocity-time graphs. When evaluating gradients and areas under these kinematic curves, students commonly drop marks by carelessly misinterpreting the physical axis units or misapplying kinematic equations of motion to non-uniform acceleration scenarios.
+                Mastering <strong>{selected_topic}</strong> forms the indisputable bedrock of achieving a stellar A* in your Cambridge examinations. At its core, this foundational domain forces you to shift from merely memorizing formulas to genuinely conceptualizing the underlying mechanical or theoretical interactions relevant to <strong>{selected_subject}</strong>. Examiners frequently design multi-tier data response questions that require you to seamlessly integrate core principles. When evaluating complex scenarios, students commonly drop marks by carelessly misinterpreting foundational definitions or misapplying equations to non-standard syllabus situations.
                 </p>
                 <p class="paragraph-text">
-                To systematically bypass these common pitfalls, you must train yourself to dissect problems methodically: first, explicitly state the known variables, second, identify the governing physical law, and third, substitute values with strict adherence to S.I. units. Furthermore, dynamics builds directly onto these concepts by analyzing the direct causes of motion—namely forces and Newton's Laws. Particular focus must be given to resolving forces into perpendicular components and fully grasping resistive forces such as air resistance or terminal velocity. Consistent, deliberate practice using papers from the last five years will expose you to the recurring structural patterns and trick questions designed by examiners to test conceptual depth rather than simple recall.
+                To systematically bypass these common pitfalls, you must train yourself to dissect problems methodically: first, explicitly state the known parameters, second, identify the governing fundamental law, and third, synthesize solutions with strict academic precision. Furthermore, advanced problem solving builds directly onto these concepts by analyzing variables step-by-step. Particular focus must be given to evaluating intricate scenarios and breaking down abstract processes. Consistent, deliberate practice using past variants will expose you to the recurring structural patterns and application-style questions designed by examiners to test true conceptual depth rather than simple recall.
                 </p>
                 """, unsafe_allow_html=True)
                 
@@ -208,25 +208,26 @@ else:
                 st.write("Cross-reference your answers with official standards to see where marks are awarded or lost:")
                 st.download_button("Download Marking Scheme (PDF)", data="Sample PDF Content", file_name="marking_scheme.pdf")
 
-        # Conversational AI Past Paper Assistant
+        # Conversational AI Past Paper Assistant (Universal Chat Module)
         st.markdown("---")
-        st.markdown("<h2 style='color:#00ffcc'>💬 Universal AI Assistant & Tutor</h2>", unsafe_allow_html=True)
+        st.markdown("<h2 style='color:#00ffcc'>💬 Universal Chat & AI Assistant</h2>", unsafe_allow_html=True)
         st.markdown("<p style='color:#a8b2c1'>Ask the AI anything—whether it's finding an obscure paper variant, getting unstuck on a homework problem, or requesting advice on how to write structured answers!</p>", unsafe_allow_html=True)
         
-        user_prompt = st.text_input("Pose any question or paper request (e.g., 'I can't find June 2022 physics, help me find it and tell me how to write it'):")
-        if st.button("Ask AI Tutor"):
+        # Dedicated universal chat input
+        user_prompt = st.text_input(f"Pose any query related to {selected_subject} / {selected_subject if 'selected_topic' in locals() else 'your chosen topic'}:")
+        if st.button("Submit to AI Assistant"):
             if user_prompt:
                 st.session_state.credits += 15
-                st.markdown("""
+                st.markdown(f"""
                 **AI Assistant Response:**
-                I'm on it! To easily locate the **June 2022 Physics** past paper, I highly recommend checking index platforms like *PapaCambridge* or *Dynamic Papers*. If it's for A-Level, search exactly for `Physics 9702 June 2022 Paper 22`; for O-Level, look up `Physics 5054`. 
+                Got it! Let's address your query regarding **{user_prompt}**.
                 
-                **How to structure your answers to guarantee maximum examiner credit:**
+                To master questions surrounding your chosen topic and ensure maximum examiner credit:
                 * **Calculations:** Always write down the general formula first. Show your step-by-step substitution, and conclude with the appropriate S.I. unit.
-                * **Theory paragraphs:** Avoid slang or colloquial language. Use precise, technical vocabulary (e.g., use words like *terminal velocity* or *electromotive force*).
-                * **Graph questions:** Use a sharp pencil, draw fine lines, and always label your axes clearly with units. Ensure you pick points that are more than half the graph line apart for gradient calculations.
+                * **Theory paragraphs:** Avoid slang or colloquial language. Use precise, technical vocabulary relevant to {selected_subject}.
+                * **Application:** Ensure you explicitly link cause and effect in structured questions.
                 
-                *Do you want me to generate a tailored study timetable to get you prepared for this specific past paper?*
+                *Would you like me to generate a tailored study timetable to get you fully prepared?*
                 """)
             else:
                 st.warning("Please enter a question or request first.")
@@ -236,11 +237,14 @@ else:
         st.markdown("<h1 class='main-title'>🎁 Supernova Reward Store</h1>", unsafe_allow_html=True)
         st.markdown("<p class='main-subtitle'>Redeem your hard-earned study XP credits to customize your interface</p>", unsafe_allow_html=True)
         
+        # Super attractive, teen-appealing gamification store design
+        st.markdown("""<div class="store-container">""", unsafe_allow_html=True)
+        st.markdown("<h2>🌟 Welcome to the Supernova Shop! 🌟</h2>", unsafe_allow_html=True)
+        st.markdown("<p>Spend your XP on exclusive stickers and portal customizations. Flex on your friends!</p>", unsafe_allow_html=True)
         st.markdown(f'<p class="credit-box">💰 Current Credit Balance: {st.session_state.credits} XP</p>', unsafe_allow_html=True)
         st.markdown("<br>", unsafe_allow_html=True)
         
         st.markdown("### 🛍️ Digital UI Stickers (Cost: 50 XP each)")
-        st.write("Buy fun digital stickers to stick directly on your study dashboard UI.")
         
         col_s1, col_s2, col_s3 = st.columns(3)
         with col_s1:
@@ -277,3 +281,5 @@ else:
         if st.session_state.stickers:
             st.markdown("<br><h3>🎒 Your Active Stickers:</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size:2.5em; background:#1e1e2a; padding:20px; border-radius:12px; border:1px solid #33334d;'>{' '.join(st.session_state.stickers)}</div>", unsafe_allow_html=True)
+        
+        st.markdown("</div>", unsafe_allow_html=True)
