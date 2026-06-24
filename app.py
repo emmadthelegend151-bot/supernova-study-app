@@ -44,7 +44,7 @@ st.markdown("""
         margin-bottom: 15px;
     }
 
-    /* Custom Buttons (Neon Purple/Cyan) with Color-Changing Cursor Effect */
+    /* Custom Buttons with Color-Changing Cursor/Hover Effect */
     .stButton>button {
         background: linear-gradient(90deg, #8a2be2, #00ffcc);
         color: #000000;
@@ -54,10 +54,10 @@ st.markdown("""
         padding: 10px 24px;
         box-shadow: 0 4px 15px rgba(138,43,226,0.3);
         transition: all 0.3s ease;
-        cursor: alias !important;
+        cursor: pointer;
     }
     .stButton>button:hover {
-        transform: translateY(-2px);
+        transform: translateY(-3px) scale(1.02);
         background: linear-gradient(90deg, #ff007f, #ffbf69) !important;
         box-shadow: 0 6px 20px rgba(255,0,127,0.5);
         color: #fff !important;
@@ -102,7 +102,7 @@ st.markdown("""
 
 # --- INITIALIZE SESSION STATE WITH PRE-FILLED DETAILS ---
 if "logged_in" not in st.session_state:
-    st.session_state.logged_in = True  # Set directly to True as requested
+    st.session_state.logged_in = True  
 if "username" not in st.session_state:
     st.session_state.username = "Himachali"
 if "email" not in st.session_state:
@@ -112,7 +112,7 @@ if "program" not in st.session_state:
 if "school" not in st.session_state:
     st.session_state.school = "Supernova"
 if "credits" not in st.session_state:
-    st.session_state.credits = 700  # Starts with 700 credits
+    st.session_state.credits = 700  
 if "stickers" not in st.session_state:
     st.session_state.stickers = []
 if "app_mode" not in st.session_state:
@@ -120,7 +120,7 @@ if "app_mode" not in st.session_state:
 
 # --- FLOW: MAIN DASHBOARD ---
 if st.session_state.logged_in:
-    st.sidebar.title(f"✨ Welcome back,")
+    st.sidebar.title("✨ Welcome back,")
     st.sidebar.subheader(f"👤 {st.session_state.username}")
     st.sidebar.markdown(f"**Program:** {st.session_state.program} &nbsp;|&nbsp; **School:** {st.session_state.school}")
     
@@ -162,10 +162,10 @@ if st.session_state.logged_in:
         if search_query:
             st.success(f"Papers located matching '{search_query}' for {selected_subject}:")
             
-            # Options for all major Cambridge exam sessions as requested
+            # Options for all major Cambridge exam sessions
             session = st.selectbox("Select Exam Series/Variant:", ["Feb/March", "May/June", "October/November"])
             
-            st.markdown(f"**Click any actual Cambridge link below to download your paper:**")
+            st.markdown("**Click any actual Cambridge link below to download your paper:**")
             st.markdown(f"🔗 [Variant 11 - {session} {search_query} Past Paper Direct Link](https://www.cambridgeinternational.org)")
             st.markdown(f"🔗 [Variant 12 - {session} {search_query} Past Paper Direct Link](https://www.cambridgeinternational.org)")
             st.markdown(f"🔗 [Variant 21 - {session} {search_query} Past Paper Direct Link](https://www.cambridgeinternational.org)")
@@ -189,7 +189,7 @@ if st.session_state.logged_in:
                 
                 st.markdown(f"## 📖 AI Comprehensive Masterclass: {selected_topic} ({selected_subject})")
                 
-                # Highly descriptive multi-paragraph explanations as requested
+                # Highly descriptive multi-paragraph explanations
                 st.markdown(f"""
                 <p class="paragraph-text">
                 Mastering <strong>{selected_topic}</strong> forms the indisputable bedrock of achieving a stellar A* in your Cambridge examinations. At its core, this foundational domain forces you to shift from merely memorizing formulas to genuinely conceptualizing the underlying mechanical or theoretical interactions relevant to <strong>{selected_subject}</strong>. Examiners frequently design multi-tier data response questions that require you to seamlessly integrate core principles. When evaluating complex scenarios, students commonly drop marks by carelessly misinterpreting foundational definitions or misapplying equations to non-standard syllabus situations.
@@ -237,8 +237,8 @@ if st.session_state.logged_in:
         st.markdown("<h1 class='main-title'>🎁 Supernova Reward Store</h1>", unsafe_allow_html=True)
         st.markdown("<p class='main-subtitle'>Redeem your hard-earned study XP credits to customize your interface</p>", unsafe_allow_html=True)
         
-        # Super attractive, teen-appealing gamification store design
-        st.markdown("""<div class="store-container">""", unsafe_allow_html=True)
+        # Attractive, teen-appealing gamification store design
+        st.markdown("<div class='store-container'>", unsafe_allow_html=True)
         st.markdown("<h2>🌟 Welcome to the Supernova Shop! 🌟</h2>", unsafe_allow_html=True)
         st.markdown("<p>Spend your XP on exclusive stickers and portal customizations. Flex on your friends!</p>", unsafe_allow_html=True)
         st.markdown(f'<p class="credit-box">💰 Current Credit Balance: {st.session_state.credits} XP</p>', unsafe_allow_html=True)
@@ -278,46 +278,8 @@ if st.session_state.logged_in:
                 else:
                     st.error("Not enough credits.")
 
-        if st.session_state.stickers:
+        if st.stickers:
             st.markdown("<br><h3>🎒 Your Active Stickers:</h3>", unsafe_allow_html=True)
             st.markdown(f"<div style='font-size:2.5em; background:#1e1e2a; padding:20px; border-radius:12px; border:1px solid #33334d;'>{' '.join(st.session_state.stickers)}</div>", unsafe_allow_html=True)
         
         st.markdown("</div>", unsafe_allow_html=True)
-        import streamlit as st
-
-# --- PAGE CONFIGURATION ---
-st.set_page_config(page_title="Supernova Study Portal", page_icon="🌠", layout="wide")
-
-# --- TEEN-ENGAGING STYLING (DARK MODE + NEON ACCENTS) ---
-st.markdown("""
-    <style>
-    /* Global Dark Mode & Typography */
-    .stApp {
-        background-color: #0d0e12;
-        color: #eaeaea;
-        font-family: 'Inter', sans-serif;
-    }
-    
-    /* Main Headings */
-    .main-title {
-        color: #00ffcc;
-        font-weight: 800;
-        text-align: center;
-        font-size: 2.8em;
-        text-shadow: 0px 0px 10px rgba(0,255,204,0.4);
-        margin-bottom: 0.1em;
-    }
-    
-    .main-subtitle {
-        color: #a8b2c1;
-        text-align: center;
-        font-size: 1.3em;
-        margin-bottom: 2em;
-    }
-
-    /* Cards & Containers */
-    div[data-testid="stVerticalBlock"] > div > div > div[class="stApp"] {
-        background-color: #16161f;
-    }
-    
-    .custom-card {
