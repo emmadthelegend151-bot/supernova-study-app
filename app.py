@@ -381,18 +381,12 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
                 * **v² = u² + 2as** (Velocity squared equals initial velocity squared plus twice acceleration times displacement)
                 """)
                 
-                # Visual diagram tags for learner guidance
+                # Visual diagram tags for learner guidance (Image of displacement time graph)
+                st.markdown("
+")
                 st.markdown("Visualizing displacement and velocity vector profiles makes computations intuitive:")
                 st.image("https://upload.wikimedia.org/wikipedia/commons/e/ea/Displacement-time.png", caption="Displacement-Time Graph Vector Breakdown")
-                
-
-[Image of displacement time graph]
-
                 st.image("https://upload.wikimedia.org/wikipedia/commons/2/26/Velocity-time.png", caption="Velocity-Time Graph Acceleration & Area Under Curve")
-                
-
-[Image of velocity time graph]
-
                 
             elif selected_topic == "Moments":
                 # In-depth Physics Moments Masterclass with formulas and principles
@@ -412,8 +406,9 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
                 * **Second Condition for Equilibrium (Principle of Moments)**: $\sum \text{Clockwise Moments} = \sum \text{Anticlockwise Moments}$.
                 """)
                 
+                # Image of a lever moment diagram
+                st.markdown("")
                 st.image("https://upload.wikimedia.org/wikipedia/commons/b/b0/Moment_arm.svg", caption="Visualizing Lever Arms and Pivot Points for Torque/Moments")
-                
                 
             else:
                 st.markdown(f"## 📖 AI Comprehensive Masterclass: {selected_topic} ({selected_subject})")
@@ -572,6 +567,7 @@ else:
     if st.markdown("""
         <button class="floating-chat-ball" onclick="this.click()">💬</button>
     """, unsafe_allow_html=True):
-        if st.button("🤖", key="launch_ball_btn", help="Open Universal AI Chat Assistant"):
-            st.session_state.chat_open = True
-            st.rerun()
+        pass
+    if st.button("🤖", key="launch_ball_btn", help="Open Universal AI Chat Assistant"):
+        st.session_state.chat_open = True
+        st.rerun()
