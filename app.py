@@ -283,3 +283,41 @@ if st.session_state.logged_in:
             st.markdown(f"<div style='font-size:2.5em; background:#1e1e2a; padding:20px; border-radius:12px; border:1px solid #33334d;'>{' '.join(st.session_state.stickers)}</div>", unsafe_allow_html=True)
         
         st.markdown("</div>", unsafe_allow_html=True)
+        import streamlit as st
+
+# --- PAGE CONFIGURATION ---
+st.set_page_config(page_title="Supernova Study Portal", page_icon="🌠", layout="wide")
+
+# --- TEEN-ENGAGING STYLING (DARK MODE + NEON ACCENTS) ---
+st.markdown("""
+    <style>
+    /* Global Dark Mode & Typography */
+    .stApp {
+        background-color: #0d0e12;
+        color: #eaeaea;
+        font-family: 'Inter', sans-serif;
+    }
+    
+    /* Main Headings */
+    .main-title {
+        color: #00ffcc;
+        font-weight: 800;
+        text-align: center;
+        font-size: 2.8em;
+        text-shadow: 0px 0px 10px rgba(0,255,204,0.4);
+        margin-bottom: 0.1em;
+    }
+    
+    .main-subtitle {
+        color: #a8b2c1;
+        text-align: center;
+        font-size: 1.3em;
+        margin-bottom: 2em;
+    }
+
+    /* Cards & Containers */
+    div[data-testid="stVerticalBlock"] > div > div > div[class="stApp"] {
+        background-color: #16161f;
+    }
+    
+    .custom-card {
