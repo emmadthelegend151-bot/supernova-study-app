@@ -686,7 +686,7 @@ if st.session_state.chat_open:
     for msg in st.session_state.chat_history:
         st.write(msg)
         st.markdown('</div>', unsafe_allow_html=True)
-    else:
+else:
     if st.button("💬 Open Chat"):
         st.session_state.chat_open = True
         st.rerun()
