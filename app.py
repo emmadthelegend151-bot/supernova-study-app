@@ -551,7 +551,6 @@ if st.session_state.chat_open:
                 # Instructionally useful diagram injection for Learning/Understanding
                 
 
-[Image of torque or moment of force]
 
             elif "algorithm" in chat_prompt.lower() or "code" in chat_prompt.lower():
                 ai_response += """
