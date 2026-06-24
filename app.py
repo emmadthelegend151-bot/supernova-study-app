@@ -564,7 +564,7 @@ if st.session_state.chat_open:
                 """
                 
 
-[Image of animal cell diagram]
+
 
                 
             st.session_state.chat_history.append(("ai", ai_response))
