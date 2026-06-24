@@ -573,3 +573,235 @@ else:
     if st.button("🤖", key="launch_ball_btn", help="Open Universal AI Chat Assistant"):
         st.session_state.chat_open = True
         st.rerun()
+# --- FLOATING CHATBOT ENGINE (STICKING BALL UI ON THE RIGHT) ---
+if st.session_state.chat_open:
+    st.markdown("""
+    <div class="chat-window">
+        <h3 style="color:#00ffcc; margin-top:0; border-bottom:1px solid #33334d; padding-bottom:10px;">🤖 Supernova AI Chat</h3>
+    """, unsafe_allow_html=True)
+    
+    # Chat window contents
+    st.write("Ask the AI anything—formulas, definitions, or past paper assistance (Math, Computer, Bio)!")
+    chat_prompt = st.text_input("Type your question here:", key="chat_input_txt")
+    
+    if st.button("Send", key="send_chat_btn"):
+        if chat_prompt:
+            st.session_state.credits += 15
+            st.session_state.chat_history.append(("user", chat_prompt))
+            
+            # Universal Chat Detailed Paragraph Response Engine
+            ai_response = f"""
+            Let's methodically break down your query regarding **{chat_prompt}**.
+            
+            When approaching analytical questions, the most critical step is to analyze the syllabus keywords before attempting any direct computations. Many candidates lose credit simply by failing to identify core principles embedded within the prompt. You must first extract all given parameters and state the fundamental laws or formulas that govern the scenario.
+            
+            Executing computations requires strict adherence to standard formatting. Always state the baseline formula in its algebraic form, substitute variables with S.I. units, and proudly display final values to appropriate significant figures. For theoretical explanations, avoid conversational phrasing or casual abbreviations; lean heavily on precise technical vocabulary.
+            """
+            
+            # Contextual AI advice depending on subject query
+            if "moment" in chat_prompt.lower() or "torque" in chat_prompt.lower():
+                ai_response += """
+                ### 🧮 Moments Quick-Reference
+                A moment is the turning effect of a force. 
+                **Moment = Force × Perpendicular distance from pivot** (M = F × d). 
+                For equilibrium, the **Principle of Moments** dictates that the total clockwise moment equals the total anticlockwise moment about the same pivot.
+                """
+            elif "algorithm" in chat_prompt.lower() or "code" in chat_prompt.lower():
+                ai_response += """
+                ### 💻 Computer Science Quick-Reference
+                Make sure you trace algorithms step-by-step using a trace table. Pay close attention to loop conditions (while vs. for) and variable initialization to avoid off-by-one errors.
+                """
+            elif "cell" in chat_prompt.lower() or "gene" in chat_prompt.lower():
+                ai_response += """
+                ### 🧬 Biology Quick-Reference
+                When describing biological processes, always link structure to function and mention specific enzymes or cellular components involved.
+                """
+                
+            st.session_state.chat_history.append(("ai", ai_response))
+            st.rerun()
+        else:
+            st.warning("Please enter a query.")
+            
+    # Display message history inside the chat UI container
+    for sender, text in st.session_state.chat_history:
+        if sender == "user":
+            st.markdown(f"**You:** {text}")
+        else:
+            st.markdown(f"**AI:** {text}")
+            
+    if st.button("❌ Close Chat", key="close_chat_btn"):
+        st.session_state.chat_open = False
+        st.rerun()
+        
+    st.markdown("</div>", unsafe_allow_html=True) # Closes the custom chat-window div cleanly
+
+# --- FLOATING CHATBOT ENGINE (STICKING BALL UI ON THE RIGHT) ---
+if st.session_state.chat_open:
+    st.markdown("""
+    <div class="chat-window">
+        <h3 style="color:#00ffcc; margin-top:0; border-bottom:1px solid #33334d; padding-bottom:10px;">🤖 Supernova AI Chat</h3>
+    """, unsafe_allow_html=True)
+    
+    # Chat window contents
+    st.write("Ask the AI anything—formulas, definitions, or past paper assistance (Math, Computer, Bio)!")
+    chat_prompt = st.text_input("Type your question here:", key="chat_input_txt")
+    
+    if st.button("Send", key="send_chat_btn"):
+        if chat_prompt:
+            st.session_state.credits += 15
+            st.session_state.chat_history.append(("user", chat_prompt))
+            
+            # Universal Chat Detailed Paragraph Response Engine
+            ai_response = f"""
+            Let's methodically break down your query regarding **{chat_prompt}**.
+            
+            When approaching analytical questions, the most critical step is to analyze the syllabus keywords before attempting any direct computations. Many candidates lose credit simply by failing to identify core principles embedded within the prompt. You must first extract all given parameters and state the fundamental laws or formulas that govern the scenario.
+            
+            Executing computations requires strict adherence to standard formatting. Always state the baseline formula in its algebraic form, substitute variables with S.I. units, and proudly display final values to appropriate significant figures. For theoretical explanations, avoid conversational phrasing or casual abbreviations; lean heavily on precise technical vocabulary.
+            """
+            
+            # Contextual AI advice depending on subject query
+            if "moment" in chat_prompt.lower() or "torque" in chat_prompt.lower():
+                ai_response += """
+                ### 🧮 Moments Quick-Reference
+                A moment is the turning effect of a force. 
+                **Moment = Force × Perpendicular distance from pivot** (M = F × d). 
+                For equilibrium, the **Principle of Moments** dictates that the total clockwise moment equals the total anticlockwise moment about the same pivot.
+                """
+            elif "algorithm" in chat_prompt.lower() or "code" in chat_prompt.lower():
+                ai_response += """
+                ### 💻 Computer Science Quick-Reference
+                Make sure you trace algorithms step-by-step using a trace table. Pay close attention to loop conditions (while vs. for) and variable initialization to avoid off-by-one errors.
+                """
+            elif "cell" in chat_prompt.lower() or "gene" in chat_prompt.lower():
+                ai_response += """
+                ### 🧬 Biology Quick-Reference
+                When describing biological processes, always link structure to function and mention specific enzymes or cellular components involved.
+                """
+                
+            st.session_state.chat_history.append(("ai", ai_response))
+            st.rerun()
+        else:
+            st.warning("Please enter a query.")
+            
+    # Display message history inside the chat UI container
+    for sender, text in st.session_state.chat_history:
+        if sender == "user":
+            st.markdown(f"**You:** {text}")
+        else:
+            st.markdown(f"**AI:** {text}")
+            
+    if st.button("❌ Close Chat", key="close_chat_btn"):
+        st.session_state.chat_open = False
+        st.rerun()
+        
+    st.markdown("</div>", unsafe_allow_html=True) # Closes the custom chat-window div cleanly
+# --- FLOATING CHATBOT ENGINE (STICKING BALL UI ON THE RIGHT) ---
+if st.session_state.chat_open:
+    st.markdown("""
+    <div class="chat-window">
+        <h3 style="color:#00ffcc; margin-top:0; border-bottom:1px solid #33334d; padding-bottom:10px;">🤖 Supernova AI Chat</h3>
+    """, unsafe_allow_html=True)
+    
+    # Chat window contents
+    st.write("Ask the AI anything—formulas, definitions, or past paper assistance (Math, Computer, Bio)!")
+    chat_prompt = st.text_input("Type your question here:", key="chat_input_txt")
+    
+    if st.button("Send", key="send_chat_btn"):
+        if chat_prompt:
+            st.session_state.credits += 15
+            st.session_state.chat_history.append(("user", chat_prompt))
+            
+            # Universal Chat Detailed Paragraph Response Engine
+            ai_response = f"""
+            Let's methodically break down your query regarding **{chat_prompt}**.
+            
+            When approaching analytical questions, the most critical step is to analyze the syllabus keywords before attempting any direct computations. Many candidates lose credit simply by failing to identify core principles embedded within the prompt. You must first extract all given parameters and state the fundamental laws or formulas that govern the scenario.
+            
+            Executing computations requires strict adherence to standard formatting. Always state the baseline formula in its algebraic form, substitute variables with S.I. units, and proudly display final values to appropriate significant figures. For theoretical explanations, avoid conversational phrasing or casual abbreviations; lean heavily on precise technical vocabulary.
+            """
+            
+            # Contextual AI advice depending on subject query
+            if "moment" in chat_prompt.lower() or "torque" in chat_prompt.lower():
+                ai_response += """
+                ### 🧮 Moments Quick-Reference
+                A moment is the turning effect of a force. 
+                **Moment = Force × Perpendicular distance from pivot** (M = F × d). 
+                For equilibrium, the **Principle of Moments** dictates that the total clockwise moment equals the total anticlockwise moment about the same pivot.
+                """
+            elif "algorithm" in chat_prompt.lower() or "code" in chat_prompt.lower():
+                ai_response += """
+                ### 💻 Computer Science Quick-Reference
+                Make sure you trace algorithms step-by-step using a trace table. Pay close attention to loop conditions (while vs. for) and variable initialization to avoid off-by-one errors.
+                """
+            elif "cell" in chat_prompt.lower() or "gene" in chat_prompt.lower():
+                ai_response += """
+                ### 🧬 Biology Quick-Reference
+                When describing biological processes, always link structure to function and mention specific enzymes or cellular components involved.
+                """
+                
+            st.session_state.chat_history.append(("ai", ai_response))
+            st.rerun()
+        else:
+            st.warning("Please enter a query.")
+            
+    # Display message history inside the chat UI container
+    for sender, text in st.session_state.chat_history:
+        if sender == "user":
+            st.markdown(f"**You:** {text}")
+        else:
+            st.markdown(f"**AI:** {text}")
+            
+    if st.button("❌ Close Chat", key="close_chat_btn"):
+        st.session_state.chat_open = False
+        st.rerun()
+        
+    st.markdown("</div>", unsafe_allow_html=True) # Closes the custom chat-window div cleanly
+
+else:
+    # Sleek, perfectly round glowing circular button to launch the AI assistant
+    launch_chat = st.button("💬", key="launch_ball_btn", help="Open Universal AI Chat Assistant")
+    if launch_chat:
+        st.session_state.chat_open = True
+        st.rerun()
+        .stApp {{
+    background-color: {st.session_state.active_bg} !important;
+    background-image: radial-gradient(circle, rgba(15,23,42,0.8) 0%, rgba(2,6,23,0.95) 100%), 
+                      url('https://www.transparenttextures.com/patterns/cubes.png');
+    background-blend-mode: overlay;
+    background-size: cover;
+    background-position: center;
+    color: #eaeaea;
+    font-family: 'Inter', sans-serif;
+}}
+.stApp {{
+    background-color: #05050c !important;
+    background-image: linear-gradient(rgba(5, 5, 12, 0.75), rgba(5, 5, 12, 0.9)), 
+                      url('https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=1920');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #eaeaea;
+    font-family: 'Inter', sans-serif;
+}}
+.store-grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.store-item-card {
+    background: linear-gradient(135deg, #161622, #1f1f38);
+    border: 2px solid #3f3f6c;
+    padding: 20px;
+    border-radius: 16px;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+    transition: all 0.4s ease;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
