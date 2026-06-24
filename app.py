@@ -298,7 +298,7 @@ st.session_state.logged_in = True
 # --- SIDEBAR ---
 st.sidebar.title("✨ Welcome back,")
 st.sidebar.subheader(f"👤 {st.session_state.username}")
-st.sidebar.markdown(f"**Program:** {st.session_state.program} &nbsp;|&nbsp; **School:** {st.sidebar.markdown(st.session_state.school) if False else st.session_state.school}")
+st.sidebar.markdown(f"**Program:** {st.session_state.program} &nbsp;|&nbsp; **School:** {st.session_state.school}")
 
 app_mode = st.sidebar.selectbox("Navigate", ["Dashboard", "Past Papers & AI Hub", "Reward Store"], index=["Dashboard", "Past Papers & AI Hub", "Reward Store"].index(st.session_state.app_mode))
 st.session_state.app_mode = app_mode
@@ -381,10 +381,12 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
                 * **v² = u² + 2as** (Velocity squared equals initial velocity squared plus twice acceleration times displacement)
                 """)
                 
-                # Visual diagram tags for learner guidance (Image of displacement time graph)
-                st.markdown("
-")
                 st.markdown("Visualizing displacement and velocity vector profiles makes computations intuitive:")
+                st.markdown("Here is a helpful diagram for understanding displacement over time:")
+                
+
+[Image of displacement-time graph]
+
                 st.image("https://upload.wikimedia.org/wikipedia/commons/e/ea/Displacement-time.png", caption="Displacement-Time Graph Vector Breakdown")
                 st.image("https://upload.wikimedia.org/wikipedia/commons/2/26/Velocity-time.png", caption="Velocity-Time Graph Acceleration & Area Under Curve")
                 
@@ -406,8 +408,8 @@ elif st.session_state.app_mode == "Past Papers & AI Hub":
                 * **Second Condition for Equilibrium (Principle of Moments)**: $\sum \text{Clockwise Moments} = \sum \text{Anticlockwise Moments}$.
                 """)
                 
-                # Image of a lever moment diagram
-                st.markdown("")
+                st.markdown("Here is a clear diagram showing a lever arm mechanism:")
+                
                 st.image("https://upload.wikimedia.org/wikipedia/commons/b/b0/Moment_arm.svg", caption="Visualizing Lever Arms and Pivot Points for Torque/Moments")
                 
             else:
