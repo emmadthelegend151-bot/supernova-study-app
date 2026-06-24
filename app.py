@@ -885,8 +885,4 @@ if st.session_state.chat_open:
         st.write(msg)
         
     st.markdown('</div>', unsafe_allow_html=True)
-else:
-    # Button to Open
-    if st.button("💬 Chat"):
-        st.session_state.chat_open = True
-        st.rerun()
+
